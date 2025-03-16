@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Sreejsh</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #1a1a1a; /* Dark classic background */
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* Button Styling */
+        #startButton {
+            transition: transform 0.3s ease, opacity 0.5s ease;
+        }
+
+        #startButton:hover {
+            transform: scale(1.1);
+        }
+
+        /* Main Content Styling */
+        #mainContent {
+            transform: scale(0);
+            opacity: 0;
+            transition: transform 1s ease-out, opacity 0.8s ease-out;
+        }
+
+        .zoom-in {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        /* Smoke Effect */
+        .smoke {
+            position: absolute;
+            width: 100px;
+            height: 100vh;
+            background: linear-gradient(to top, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+            animation: smokeFloat 10s infinite ease-in-out;
+            pointer-events: none;
+        }
+
+        .smoke-left {
+            left: 0;
+            transform: translateX(-50%);
+        }
+
+        .smoke-right {
+            right: 0;
+            transform: translateX(50%);
+        }
+
+        @keyframes smokeFloat {
+            0% { transform: translateY(0) translateX(-50%); opacity: 0.2; }
+            50% { transform: translateY(-20vh) translateX(-50%); opacity: 0.3; }
+            100% { transform: translateY(0) translateX(-50%); opacity: 0.2; }
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .smoke {
+                width: 50px;
+            }
+            #mainContent {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center h-screen text-white">
+    <!-- Initial Button -->
+    <button id="startButton" class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-4 rounded-full text-xl font-bold shadow-lg">
+        Enter Sreejsh's Birthday World
+    </button>
+
+    <!-- Main Content -->
+    <div id="mainContent" class="absolute inset-0 flex flex-col items-center justify-center text-center p-4">
+        <h1 class="text-4xl md:text-6xl font-bold text-yellow-300 drop-shadow-lg">
+            Happy Birthday, Sreejsh!
+        </h1>
+        <p class="mt-4 text-lg md:text-2xl text-gray-200 max-w-md">
+            From your loving family: Wishing you a day full of joy, laughter, and unforgettable moments, Sreekuttan!
+        </p>
+    </div>
+
+    <!-- Smoke Effects -->
+    <div class="smoke smoke-left"></div>
+    <div class="smoke smoke-right"></div>
+
+    <script>
+        const startButton = document.getElementById('startButton');
+        const mainContent = document.getElementById('mainContent');
+
+        startButton.addEventListener('click', () => {
+            // Hide button with animation
+            startButton.style.opacity = '0';
+            setTimeout(() => {
+                startButton.style.display = 'none';
+            }, 500);
+
+            // Zoom in main content
+            mainContent.classList.add('zoom-in');
+        });
+    </script>
+</body>
+</html>

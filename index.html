@@ -15,24 +15,22 @@
             font-family: 'Arial', sans-serif;
         }
 
-        /* Button Styling */
         #startButton {
             transition: transform 0.3s ease, opacity 0.5s ease;
-            z-index: 10; /* Ensure button is above content */
+            z-index: 10;
         }
 
         #startButton:hover {
             transform: scale(1.1);
         }
 
-        /* Main Content Styling */
         #mainContent {
             transform: scale(0);
             opacity: 0;
             transition: transform 1s ease-out, opacity 0.8s ease-out;
             position: absolute;
             inset: 0;
-            z-index: 5; /* Below button initially */
+            z-index: 5;
         }
 
         .zoom-in {
@@ -40,7 +38,6 @@
             opacity: 1;
         }
 
-        /* Smoke Effect */
         .smoke {
             position: absolute;
             width: 100px;
@@ -50,15 +47,8 @@
             pointer-events: none;
         }
 
-        .smoke-left {
-            left: 0;
-            transform: translateX(-50%);
-        }
-
-        .smoke-right {
-            right: 0;
-            transform: translateX(50%);
-        }
+        .smoke-left { left: 0; transform: translateX(-50%); }
+        .smoke-right { right: 0; transform: translateX(50%); }
 
         @keyframes smokeFloat {
             0% { transform: translateY(0) translateX(-50%); opacity: 0.2; }
@@ -66,24 +56,17 @@
             100% { transform: translateY(0) translateX(-50%); opacity: 0.2; }
         }
 
-        /* Responsive Adjustments */
         @media (max-width: 768px) {
-            .smoke {
-                width: 50px;
-            }
-            #mainContent {
-                padding: 1rem;
-            }
+            .smoke { width: 50px; }
+            #mainContent { padding: 1rem; }
         }
     </style>
 </head>
 <body class="flex items-center justify-center h-screen text-white">
-    <!-- Initial Button -->
     <button id="startButton" class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-4 rounded-full text-xl font-bold shadow-lg">
         Enter Sreejsh's Birthday World
     </button>
 
-    <!-- Main Content -->
     <div id="mainContent" class="flex flex-col items-center justify-center text-center p-4">
         <h1 class="text-4xl md:text-6xl font-bold text-yellow-300 drop-shadow-lg">
             Happy Birthday, Sreejsh!
@@ -93,29 +76,29 @@
         </p>
     </div>
 
-    <!-- Smoke Effects -->
     <div class="smoke smoke-left"></div>
     <div class="smoke smoke-right"></div>
 
     <script>
+        // Silence Tailwind CDN warning for now (optional)
+        console.warn = () => {}; // Remove this if you want to see other warnings
+
         document.addEventListener('DOMContentLoaded', () => {
             const startButton = document.getElementById('startButton');
             const mainContent = document.getElementById('mainContent');
 
-            if (startButton && mainContent) {
-                startButton.addEventListener('click', () => {
-                    // Hide button with animation
-                    startButton.style.opacity = '0';
-                    setTimeout(() => {
-                        startButton.style.display = 'none';
-                    }, 500);
-
-                    // Zoom in main content
-                    mainContent.classList.add('zoom-in');
-                });
-            } else {
+            if (!startButton || !mainContent) {
                 console.error('Button or content not found!');
+                return;
             }
+
+            startButton.addEventListener('click', () => {
+                startButton.style.opacity = '0';
+                setTimeout(() => {
+                    startButton.style.display = 'none';
+                }, 500);
+                mainContent.classList.add('zoom-in');
+            });
         });
     </script>
 </body>

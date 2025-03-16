@@ -51,9 +51,9 @@
         .smoke-right { right: 0; transform: translateX(50%); }
 
         @keyframes smokeFloat {
-            0% { transform: translateY(0) translateX(-50%); opacity: 0.2; }
-            50% { transform: translateY(-20vh) translateX(-50%); opacity: 0.3; }
-            100% { transform: translateY(0) translateX(-50%); opacity: 0.2; }
+            0% { transform: translateY(0); opacity: 0.2; }
+            50% { transform: translateY(-20vh); opacity: 0.3; }
+            100% { transform: translateY(0); opacity: 0.2; }
         }
 
         @media (max-width: 768px) {
@@ -80,9 +80,6 @@
     <div class="smoke smoke-right"></div>
 
     <script>
-        // Silence Tailwind CDN warning for now (optional)
-        console.warn = () => {}; // Remove this if you want to see other warnings
-
         document.addEventListener('DOMContentLoaded', () => {
             const startButton = document.getElementById('startButton');
             const mainContent = document.getElementById('mainContent');
@@ -95,7 +92,7 @@
             startButton.addEventListener('click', () => {
                 startButton.style.opacity = '0';
                 setTimeout(() => {
-                    startButton.style.display = 'none';
+                    startButton.style.visibility = 'hidden';
                 }, 500);
                 mainContent.classList.add('zoom-in');
             });
@@ -103,3 +100,4 @@
     </script>
 </body>
 </html>
+

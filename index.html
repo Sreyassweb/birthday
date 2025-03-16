@@ -11,13 +11,14 @@
             margin: 0;
             padding: 0;
             overflow: hidden;
-            background-color: #1a1a1a; /* Dark classic background */
+            background-color: #1a1a1a;
             font-family: 'Arial', sans-serif;
         }
 
         /* Button Styling */
         #startButton {
             transition: transform 0.3s ease, opacity 0.5s ease;
+            z-index: 10; /* Ensure button is above content */
         }
 
         #startButton:hover {
@@ -29,6 +30,9 @@
             transform: scale(0);
             opacity: 0;
             transition: transform 1s ease-out, opacity 0.8s ease-out;
+            position: absolute;
+            inset: 0;
+            z-index: 5; /* Below button initially */
         }
 
         .zoom-in {
@@ -80,7 +84,7 @@
     </button>
 
     <!-- Main Content -->
-    <div id="mainContent" class="absolute inset-0 flex flex-col items-center justify-center text-center p-4">
+    <div id="mainContent" class="flex flex-col items-center justify-center text-center p-4">
         <h1 class="text-4xl md:text-6xl font-bold text-yellow-300 drop-shadow-lg">
             Happy Birthday, Sreejsh!
         </h1>
@@ -94,18 +98,24 @@
     <div class="smoke smoke-right"></div>
 
     <script>
-        const startButton = document.getElementById('startButton');
-        const mainContent = document.getElementById('mainContent');
+        document.addEventListener('DOMContentLoaded', () => {
+            const startButton = document.getElementById('startButton');
+            const mainContent = document.getElementById('mainContent');
 
-        startButton.addEventListener('click', () => {
-            // Hide button with animation
-            startButton.style.opacity = '0';
-            setTimeout(() => {
-                startButton.style.display = 'none';
-            }, 500);
+            if (startButton && mainContent) {
+                startButton.addEventListener('click', () => {
+                    // Hide button with animation
+                    startButton.style.opacity = '0';
+                    setTimeout(() => {
+                        startButton.style.display = 'none';
+                    }, 500);
 
-            // Zoom in main content
-            mainContent.classList.add('zoom-in');
+                    // Zoom in main content
+                    mainContent.classList.add('zoom-in');
+                });
+            } else {
+                console.error('Button or content not found!');
+            }
         });
     </script>
 </body>

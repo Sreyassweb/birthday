@@ -4,15 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy Birthday Sreejsh</title>
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
             margin: 0;
             padding: 0;
-            overflow: hidden;
             background-color: #1a1a1a;
             font-family: 'Arial', sans-serif;
+            overflow-x: hidden; /* Prevent horizontal scroll */
         }
 
         #startButton {
@@ -28,23 +27,24 @@
             transform: scale(0);
             opacity: 0;
             transition: transform 1s ease-out, opacity 0.8s ease-out;
-            position: absolute;
-            inset: 0;
+            min-height: 100vh; /* Full screen for intro */
+            position: relative;
             z-index: 5;
         }
 
         .zoom-in {
-            transform: scale(1);
-            opacity: 1;
+            transform: scale(1) !important;
+            opacity: 1 !important;
         }
 
         .smoke {
-            position: absolute;
+            position: fixed;
             width: 100px;
             height: 100vh;
             background: linear-gradient(to top, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
             animation: smokeFloat 10s infinite ease-in-out;
             pointer-events: none;
+            z-index: 2;
         }
 
         .smoke-left { left: 0; transform: translateX(-50%); }
@@ -56,25 +56,109 @@
             100% { transform: translateY(0); opacity: 0.2; }
         }
 
+        /* Scroll Down Button */
+        .scroll-down {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        /* Memories Section */
+        #memories {
+            min-height: 100vh;
+            padding: 4rem 2rem;
+            background-color: #1a1a1a;
+            position: relative;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 0.5rem;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-caption {
+            opacity: 1;
+        }
+
         @media (max-width: 768px) {
             .smoke { width: 50px; }
-            #mainContent { padding: 1rem; }
+            #mainContent, #memories { padding: 1rem; }
+            .gallery { grid-template-columns: 1fr; }
         }
     </style>
 </head>
-<body class="flex items-center justify-center h-screen text-white">
-    <button id="startButton" class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-4 rounded-full text-xl font-bold shadow-lg">
+<body class="text-white">
+    <button id="startButton" class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-4 rounded-full text-xl font-bold shadow-lg fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
         Enter Sreejsh's Birthday World
     </button>
 
     <div id="mainContent" class="flex flex-col items-center justify-center text-center p-4">
-        <h1 class="text-4xl md:text-6xl font-bold text-yellow-300 drop-shadow-lg">
+        <h1 class="text-4xl md:text-6xl font-bold text-yellow-300 drop-shadow-lg cursor-pointer" id="wishTitle">
             Happy Birthday, Sreejsh!
         </h1>
         <p class="mt-4 text-lg md:text-2xl text-gray-200 max-w-md">
             From your loving family: Wishing you a day full of joy, laughter, and unforgettable moments, Sreekuttan!
         </p>
+        <div class="scroll-down">
+            <svg class="w-8 h-8 text-yellow-300 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            </svg>
+        </div>
     </div>
+
+    <section id="memories" class="text-center">
+        <h2 class="text-3xl md:text-5xl font-bold text-yellow-300 mb-8">Memories with Sreekuttan</h2>
+        <div class="gallery">
+            <div class="gallery-item">
+                <img src="https://via.placeholder.com/300x200?text=Trip+1" alt="Trip 1">
+                <div class="gallery-caption">That epic road trip in 2023!</div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://via.placeholder.com/300x200?text=Trip+2" alt="Trip 2">
+                <div class="gallery-caption">Beach day with the family!</div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://via.placeholder.com/300x200?text=Trip+3" alt="Trip 3">
+                <div class="gallery-caption">Mountain adventure, 2024!</div>
+            </div>
+        </div>
+    </section>
 
     <div class="smoke smoke-left"></div>
     <div class="smoke smoke-right"></div>
@@ -83,6 +167,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             const startButton = document.getElementById('startButton');
             const mainContent = document.getElementById('mainContent');
+            const scrollDown = document.querySelector('.scroll-down');
 
             if (!startButton || !mainContent) {
                 console.error('Button or content not found!');
@@ -95,6 +180,11 @@
                     startButton.style.visibility = 'hidden';
                 }, 500);
                 mainContent.classList.add('zoom-in');
+                document.body.style.overflowY = 'auto'; // Enable scrolling
+            });
+
+            scrollDown.addEventListener('click', () => {
+                document.getElementById('memories').scrollIntoView({ behavior: 'smooth' });
             });
         });
     </script>
